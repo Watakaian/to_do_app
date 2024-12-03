@@ -1,0 +1,14 @@
+{% extends "../home.html" %}
+{% block title %}Will-Do - Change Password{% endblock %}
+{% block content %}
+    {% load django_bootstrap5 %}
+    <div class="container mt-5 pb-5">
+        <h2>Are you sure you want to delete your profile?</h2>
+        <p>This action cannot be undone.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Yes, delete my profile</button><b><b>
+            <a class="btn btn-warning" href="{% url 'profile' %}">Cancel</a>
+        </form>
+    </div>
+{% endblock content %}

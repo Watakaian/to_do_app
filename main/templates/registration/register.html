@@ -1,0 +1,17 @@
+{% extends "../home.html" %}
+{% block title %}Will-Do - Register{% endblock %}
+{% block content %}
+    {% load django_bootstrap5 %}
+    <div class="container mt-5">
+        <h2 class="text-center">Register</h2>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <div class="text-center mt-3 mb-3">
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+

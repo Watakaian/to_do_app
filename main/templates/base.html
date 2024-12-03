@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load django_bootstrap5 %} 
+    {% load static %}
+    <title>{% block title %}WILL-DO{% endblock %}</title>
+    <link rel="icon" href="{% static 'images/favicon.jpeg' %}">
+        {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top mb-5">
+        <div class="container-fluid px-lg-5 mx-lg-5">
+            <a class="navbar-brand" href="{% url "home" %}">
+                <img src="{% static 'images/to-do-list.png' %}" alt="Will-Do" width="30" height="24">
+                Will_Do
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-secondary" href="{% url "home" %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-secondary" href="{% url "add_todo" %}">Add task</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-secondary" href="{% url "todo" %}">View task/s</a>
+                        </li><li class="nav-item">
+                            <a class="nav-link btn btn-secondary" href="{% url "completed_todos" %}">View Completed</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle btn btn-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url "profile" %}">View Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url "password_change" %}">Change Password</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link btn btn-secondary" href="{% url 'login' %}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-secondary" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5 pt-1 px-lg-5">
+        {% block content %}{% endblock %}
+    </div>   
+</body>
+</html>

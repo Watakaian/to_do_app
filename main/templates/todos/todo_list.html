@@ -1,0 +1,40 @@
+{% extends "../home.html" %}
+{% load django_bootstrap5 %}
+{% block title %}Your Todos{% endblock title %}
+{% block main %}
+<div class="container">
+    {% if todos.exists %}
+    <div class="mb-3 text-center sticky-top">
+        <a href="?sort_by=due_date" class="btn btn-primary">Sort by Due Date</a>
+        <a href="?sort_by=created_at" class="btn btn-secondary">Sort by Last Added</a>
+    </div>
+        <div class="row">
+            {% for todo in todos %}
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card {% if todo.due_date < today %}border-danger{% endif %}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ todo.title }}</h5>
+                        <p class="card-text">{{ todo.description|truncatewords:15 }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">Due: {{ todo.due_date }}</small>
+                        </p>
+
+                        <p class="card-text">
+                            <small class="text-muted">Status: {{ todo.is_completed|yesno:"Completed,Not Completed" }}</small>
+                        </p>
+                        <a href="{% url 'todo_detail' todo.pk %}" class="btn btn-primary">View Details</a> <br><br>
+                        <a href="{% url 'mark_as_complete' todo.id %}" class="btn btn-success">Mark as Complete</a>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            You have no tasks yet. Click the "Add Task" button to create your first task!
+        </div>
+    {% endif %}
+</div>
+
+{% endblock main %}

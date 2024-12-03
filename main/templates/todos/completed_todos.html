@@ -1,0 +1,31 @@
+{% extends "../home.html" %}
+{% load django_bootstrap5 %}
+{% block title %}Completed Todos{% endblock title %}
+{% block main %}
+<div class="container">
+    {% if todos.exists %}
+    <h1>Completed Tasks</h1>
+    <div class="row">
+        {% for todo in todos %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ todo.title }}</h5>
+                    <p class="card-text">{{ todo.description }}</p>
+                    <p class="card-text">
+                        <small class="text-muted">Completed on: {{ todo.completed_at }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            Whoops! No completed tasks yet. Try to create and complete tasks by clicking the "Add Task"
+            button below.
+        </div>
+    {% endif %}
+</div>
+
+{% endblock main %}

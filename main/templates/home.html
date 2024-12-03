@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Will-Do - Home{% endblock %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+    <div class="container mt-3">
+        {% if user.is_authenticated %}
+            {% block remove_in_add_todo.html %}
+                {% comment %} Displays the add task button thats always at the bottom center {% endcomment %}
+                <a href="{% url "add_todo" %}" class="btn btn-dark position-fixed btn-lg shadow-lg" 
+                style="bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+                Add Task
+                </a>
+            {% endblock remove_in_add_todo.html %}
+        {% else %}
+            <h2 class="text-center">Please login to start</h2>
+            <div class="text-center"> 
+                <a href="{% url "register" %}" class="btn btn-secondary">Register for an Account</a> <br><br>
+                <a href="{% url "login" %}" class="btn btn-secondary">Login into your Account</a>
+            </div>
+        {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+    {% block main %}
+        <h1 class="text-center text-bold">Welcome {{user.username|default:"User"}}!</h1>
+        <div class="text-center"> 
+            <a href="{% url "todo" %}" class="btn btn-info">View your todos</a> <br><br>
+            <a href="{% url "completed_todos" %}" class="btn btn-secondary">View your Accomplishments</a> <br><br>
+            <h3>Add a task by clicking the button below</h3>
+            <div class="text-center">
+                <a href="{% url 'add_todo' %}">
+                    <img src="{% static 'images/down.png' %}" href="{% url "add_todo" %}" height="60px" class="rounded mx-auto d-block" alt="...">
+                </a>
+                  
+                
+            </div>
+        </div>
+    {% endblock %}
+    {% endif %}
+{% endblock content %}

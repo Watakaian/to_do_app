@@ -1,0 +1,23 @@
+{% extends "../home.html" %}
+{% load django_bootstrap5 %}
+{% block title %}{{todo.title|truncatewords:2}}{% endblock title %}
+{% block main %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ todo.title }}</h5>
+        <p class="card-text">{{ todo.description }}</p>
+        <p class="card-text">
+            <small class="text-muted">Due: {{ todo.due_date }}</small>
+        </p>
+        <p class="card-text">
+            <small class="text-muted">Status: {{ todo.is_completed|yesno:"Completed,Not Completed" }}</small>
+        </p>
+        <a href="{% url 'update_todo' todo.pk %}" class="btn btn-warning">Edit</a>
+        <form action="{% url 'delete_todo' todo.pk %}" method="POST" onclick="return confirm('Are you sure you want to delete this task?');" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <a href="{% url 'todo' %}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+{% endblock main %}

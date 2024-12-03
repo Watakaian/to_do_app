@@ -1,0 +1,11 @@
+{% extends "../home.html" %}
+{% block title %}Will-Do - Change Password{% endblock %}
+{% block content %}
+    {% load django_bootstrap5 %}
+    <div class="container mt-5 pb-5">
+        <h2>{{ user.username }}'s Profile</h2>
+        <p>Email: {{ user.email }}</p>
+        <a class="btn btn-success" href="{% url 'password_change' %}">Change Password</a> <br><br>
+        <a class="btn btn-info" href="{% url 'delete_profile' %}">Delete Profile</a>
+    </div>
+{% endblock content %}
